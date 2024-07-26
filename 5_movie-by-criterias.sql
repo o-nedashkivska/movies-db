@@ -1,12 +1,12 @@
 WITH action_or_drama AS (
-	SELECT movie_genre.movie_id
+	SELECT mg.movie_id
     FROM (
-		SELECT genre.genre_id
-        FROM `movies-db`.genre genre
-        WHERE genre.name = 'action' OR genre.name = 'drama'
-    ) genre
-	LEFT JOIN `movies-db`.movie_genre movie_genre
-	ON movie_genre.genre_id = genre.genre_id
+		SELECT g.genre_id
+        FROM `movies-db`.genre g
+        WHERE g.name = 'action' OR g.name = 'drama'
+    ) g
+	LEFT JOIN `movies-db`.movie_genre mg
+	ON mg.genre_id = g.genre_id
 )
 
 SELECT m.movie_id AS id, m.title, m.release_date, m.duration, md.description,

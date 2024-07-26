@@ -1,8 +1,8 @@
-SELECT actor.person_id AS id, person.first_name, person.last_name, 
-    SUM(movie.budget) AS total_budget
-FROM `movies-db`.movie_actor actor
-LEFT JOIN `movies-db`.person person
-ON actor.person_id = person.person_id
-LEFT JOIN `movies-db`.movie movie
-ON actor.movie_id = movie.movie_id
-GROUP BY actor.person_id;
+SELECT mc.person_id AS id, p.first_name, p.last_name, 
+    SUM(m.budget) AS total_budget
+FROM `movies-db`.movie_actor mc
+LEFT JOIN `movies-db`.person p
+ON mc.person_id = p.person_id
+LEFT JOIN `movies-db`.movie m
+ON mc.movie_id = m.movie_id
+GROUP BY mc.person_id;
