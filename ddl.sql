@@ -1,4 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS `movies-db`;
+CREATE DATABASE IF NOT EXISTS `movies-db`;
 USE `movies-db`;
 
 
