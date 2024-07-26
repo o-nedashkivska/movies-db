@@ -1,3 +1,7 @@
+CREATE SCHEMA IF NOT EXISTS `movies-db`;
+USE `movies-db`;
+
+
 -- -----------------------------------------------------
 -- Table `movies-db`.`file`
 -- -----------------------------------------------------
@@ -214,11 +218,42 @@ ENGINE=INNODB;
 
 
 -- -----------------------------------------------------
+-- Table `movies-db`.`character`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `movies-db`.`character` (
+  `character_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) NOT NULL,
+  `role` ENUM('LEADING','SUPPORTING','BACKGROUND') NOT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`character_id`))
+ENGINE=INNODB;
+
+
+-- -----------------------------------------------------
+-- Table `movies-db`.`character_detail`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `movies-db`.`character_detail` (
+  `character_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `description` TEXT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`character_id`),
+  CONSTRAINT `fk_character_detail_character`
+    FOREIGN KEY (`character_id`)
+    REFERENCES `movies-db`.`character` (`character_id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
+ENGINE=INNODB;
+
+
+-- -----------------------------------------------------
 -- Table `movies-db`.`movie_actor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `movies-db`.`movie_actor` (
   `movie_id` SMALLINT UNSIGNED NOT NULL,
   `person_id` SMALLINT UNSIGNED NOT NULL,
+  `character_id` SMALLINT UNSIGNED NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`movie_id`, `person_id`),
@@ -231,20 +266,12 @@ CREATE TABLE IF NOT EXISTS `movies-db`.`movie_actor` (
     FOREIGN KEY (`person_id`)
     REFERENCES `movies-db`.`person` (`person_id`)
     ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_movie_actor_character`
+    FOREIGN KEY (`character_id`)
+    REFERENCES `movies-db`.`character` (`character_id`)
+    ON DELETE RESTRICT
     ON UPDATE CASCADE)
-ENGINE=INNODB;
-
-
--- -----------------------------------------------------
--- Table `movies-db`.`character`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `movies-db`.`character` (
-  `character_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(50) NOT NULL,
-  `description` TEXT NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`character_id`))
 ENGINE=INNODB;
 
 
@@ -254,8 +281,6 @@ ENGINE=INNODB;
 CREATE TABLE IF NOT EXISTS `movies-db`.`movie_character` (
   `movie_id` SMALLINT UNSIGNED NOT NULL,
   `character_id` SMALLINT UNSIGNED NOT NULL,
-  `person_id` SMALLINT UNSIGNED NULL,
-  `role` ENUM('LEADING','SUPPORTING','BACKGROUND') NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`movie_id`, `character_id`),
@@ -267,11 +292,6 @@ CREATE TABLE IF NOT EXISTS `movies-db`.`movie_character` (
   CONSTRAINT `fk_movie_character_character`
     FOREIGN KEY (`character_id`)
     REFERENCES `movies-db`.`character` (`character_id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_movie_character_person`
-    FOREIGN KEY (`person_id`)
-    REFERENCES `movies-db`.`person` (`person_id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE=INNODB;
