@@ -3,93 +3,94 @@ Please note: all tables also include created_at and updated_at fields additional
 ```mermaid
 erDiagram
     file {
-        string file_id PK
-        string name
-        string mime_type
-        string key
-        string url
+        smallint file_id PK
+        varchar name
+        varchar mime_type
+        tinytext key
+        tinytext url
     }
     user {
-        string user_id PK
-        string username
-        string first_name
-        string last_name
-        string avatar_id FK
+        smallint user_id PK
+        varchar username
+        varchar first_name
+        varchar last_name
+        smallint avatar_id FK
     }
     user_login {
-        string user_id PK, FK
-        string email
-        string password
+        smallint user_id PK, FK
+        varchar email
+        varchar password
     }
     country {
-        string country_id PK
-        string name
+        tinyint country_id PK
+        varchar name
     }
     person {
-        string person_id PK
-        string first_name
-        string last_name
-        string date_of_birth
-        string gender
-        string country_id FK
-        string main_photo_id FK
+        smallint person_id PK
+        varchar first_name
+        varchar last_name
+        date date_of_birth
+        enum gender "Values: 'MALE','FEMALE','NOT_SPECIFIED'"
+        tinyint country_id FK
+        smallint main_photo_id FK
     }
     person_detail {
-        string person_id PK, FK
-        string biography
+        smallint person_id PK, FK
+        text biography
     }
     person_photo {
-        string person_id PK, FK
-        string photo_id PK, FK
+        smallint person_id PK, FK
+        smallint photo_id PK, FK
     }
     movie {
-        string movie_id PK
-        string director_id FK
-        string country_id FK
-        string title
-        string budget
-        string release_date
-        string duration
-        string poster_id FK
+        smallint movie_id PK
+        smallint director_id FK
+        tinyint country_id FK
+        varchar title
+        decimal budget
+        date release_date
+        time duration
+        smallint poster_id FK
     }
     favorite_movie {
-        string movie_id PK, FK
-        string user_id PK, FK
+        smallint movie_id PK, FK
+        smallint user_id PK, FK
     }
     movie_detail {
-        string movie_id PK, FK
-        string description
+        smallint movie_id PK, FK
+        text description
     }
     genre {
-        string genre_id PK
-        string name
+        tinyint genre_id PK
+        varchar name
     }
     movie_genre {
-        string movie_id PK, FK
-        string genre_id PK, FK
+        smallint movie_id PK, FK
+        tinyint genre_id PK, FK
     }
     character {
-        string character_id PK
-        string name
-        string role
+        smallint character_id PK
+        varchar name
+        enum role "Values: 'LEADING','SUPPORTING','BACKGROUND'"
     }
     character_detail {
-        string character_id PK, FK
-        string description
+        smallint character_id PK, FK
+        text description
     }
     movie_actor {
-        string movie_id PK, FK
-        string person_id PK, FK
-        string character_id FK
+        smallint movie_id PK, FK
+        smallint person_id PK, FK
+        smallint character_id FK
     }
     movie_character {
-        string movie_id PK, FK
-        string character_id PK, FK
+        smallint movie_id PK, FK
+        smallint character_id PK, FK
     }
     user_login |o--|| user : "is detailed version of"
     file ||--o{ person_photo : "is included in"
     file |o--o{ person : "is main photo of"
     file |o--o{ user : "is avatar of"
+    file |o--o{ movie : "is poster of"
     person_photo }o--|| person : "contains photos of"
     favorite_movie }o--|| user : "includes"
     favorite_movie }o--|| movie : "includes"

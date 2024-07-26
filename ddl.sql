@@ -22,9 +22,9 @@ ENGINE=INNODB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `movies-db`.`user` (
   `user_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(50) NOT NULL,
-  `first_name` VARCHAR(50) NOT NULL,
-  `last_name` VARCHAR(50) NOT NULL,
+  `username` VARCHAR(25) NOT NULL,
+  `first_name` VARCHAR(40) NOT NULL,
+  `last_name` VARCHAR(40) NOT NULL,
   `avatar_id` SMALLINT UNSIGNED NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -42,8 +42,8 @@ ENGINE=INNODB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `movies-db`.`user_login` (
   `user_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(50) NOT NULL,
-  `password` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(75) NOT NULL,
+  `password` VARCHAR(20) NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
@@ -72,8 +72,8 @@ ENGINE=INNODB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `movies-db`.`person` (
   `person_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(50) NOT NULL,
-  `last_name` VARCHAR(50) NOT NULL,
+  `first_name` VARCHAR(40) NOT NULL,
+  `last_name` VARCHAR(40) NOT NULL,
   `date_of_birth` DATE NULL,
   `gender` ENUM('MALE','FEMALE','NOT_SPECIFIED') NOT NULL,
   `country_id` TINYINT UNSIGNED NULL,
@@ -222,7 +222,7 @@ ENGINE=INNODB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `movies-db`.`character` (
   `character_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(40) NOT NULL,
   `role` ENUM('LEADING','SUPPORTING','BACKGROUND') NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
