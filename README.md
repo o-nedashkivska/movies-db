@@ -97,7 +97,7 @@ erDiagram
     person ||--o| person_detail : "has detailed version"
     movie }o--o| person : "has director"
     country |o--o{ person : "is home country for"
-    movie }o--o| country : "was filmed in"
+    movie }o--|| country : "was filmed in"
     movie ||--o{ movie_character : has
     person ||--o{ movie_actor : "is working as"
     movie ||--o{ movie_actor : has

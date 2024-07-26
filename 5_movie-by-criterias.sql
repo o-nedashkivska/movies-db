@@ -4,14 +4,14 @@ WITH action_or_drama AS (
 		SELECT genre.genre_id
         FROM `movies-db`.genre genre
         WHERE genre.name = 'action' OR genre.name = 'drama'
-    ) as genre
+    ) genre
 	LEFT JOIN `movies-db`.movie_genre movie_genre
 	ON movie_genre.genre_id = genre.genre_id
 )
 
-SELECT m.movie_id, m.title, m.release_date, m.duration, md.description,
-JSON_OBJECT('id', f.file_id, 'name', f.name, 'mime_type', f.mime_type, 'key', f.key, 'url', f.url) AS poster,
-JSON_OBJECT('id', p.person_id, 'first_name', p.first_name, 'last_name', p.last_name) AS director
+SELECT m.movie_id AS id, m.title, m.release_date, m.duration, md.description,
+	JSON_OBJECT('id', f.file_id, 'name', f.name, 'mime_type', f.mime_type, 'key', f.key, 'url', f.url) AS poster,
+	JSON_OBJECT('id', p.person_id, 'first_name', p.first_name, 'last_name', p.last_name) AS director
 FROM (
 	SELECT *
 	FROM `movies-db`.movie m
@@ -26,4 +26,4 @@ LEFT JOIN `movies-db`.file f
 ON m.poster_id = f.file_id
 LEFT JOIN `movies-db`.movie_detail md
 ON m.movie_id = md.movie_id
-GROUP BY m.movie_id
+GROUP BY m.movie_id;

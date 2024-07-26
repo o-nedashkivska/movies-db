@@ -191,7 +191,7 @@ UNLOCK TABLES;
 LOCK TABLES `movie_actor` WRITE;
 /*!40000 ALTER TABLE `movie_actor` DISABLE KEYS */;
 INSERT INTO `movie_actor` (`movie_id`,`person_id`,`character_id`)
-VALUES (1,4,null),(2,1,1),(2,2,3),(3,1,4),(3,3,null),(3,4,null),(4,4,5),(5,2,2),(5,3,null),(7,5,null);
+VALUES (1,4,null),(2,1,1),(2,2,3),(3,1,4),(3,3,null),(3,4,null),(4,4,5),(5,2,2),(5,3,null),(7,5,null),(7,2,null);
 /*!40000 ALTER TABLE `movie_actor` ENABLE KEYS */;
 UNLOCK TABLES;
 

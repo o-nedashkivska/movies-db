@@ -4,14 +4,12 @@ WITH movie_id_1 AS (
 	WHERE m.movie_id = 1
 )
 
-SELECT m.movie_id, m.title, m.release_date, m.duration, md.description,
-JSON_OBJECT('id', f.file_id, 'name', f.name, 'mime_type', f.mime_type, 'key', f.key, 'url', f.url) AS poster,
-JSON_OBJECT('id', d.person_id, 'first_name', d.first_name, 'last_name', d.last_name,
-'photo', JSON_OBJECT('id', df.file_id, 'name', df.name, 'mime_type', df.mime_type, 'key', df.key, 'url', df.url)
-) AS director,
-ma.actors,
-mg.genres 
-FROM movie_id_1 as m
+SELECT m.movie_id AS id, m.title, m.release_date, m.duration, md.description,
+	JSON_OBJECT('id', f.file_id, 'name', f.name, 'mime_type', f.mime_type, 'key', f.key, 'url', f.url) AS poster,
+	JSON_OBJECT('id', d.person_id, 'first_name', d.first_name, 'last_name', d.last_name,
+	'photo', JSON_OBJECT('id', df.file_id, 'name', df.name, 'mime_type', df.mime_type, 'key', df.key, 'url', df.url)) AS director,
+	ma.actors, mg.genres 
+FROM movie_id_1 AS m
 LEFT JOIN `movies-db`.movie_detail md
 ON m.movie_id = md.movie_id
 -- poster
@@ -47,4 +45,4 @@ LEFT JOIN (
 	ON mg.genre_id = g.genre_id
     GROUP BY movie.movie_id
 ) mg
-ON m.movie_id = mg.id
+ON m.movie_id = mg.id;
