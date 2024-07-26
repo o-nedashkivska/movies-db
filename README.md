@@ -86,25 +86,25 @@ erDiagram
         smallint movie_id PK, FK
         smallint character_id PK, FK
     }
-    user_login |o--|| user : "is detailed version of"
+    user ||--o| user_login : "has detailed version"
     file ||--o{ person_photo : "is included in"
     file |o--o{ person : "is main photo of"
-    file |o--o{ user : "is avatar of"
     file |o--o{ movie : "is poster of"
+    user }o--o| file : "has avatar"
     person_photo }o--|| person : "contains photos of"
-    favorite_movie }o--|| user : "includes"
+    user ||--o{ favorite_movie : has
     favorite_movie }o--|| movie : "includes"
-    movie_detail |o--|| movie : "is detailed version of"
-    genre ||--o{ movie_genre : "is included in"
-    movie_genre }o--|| movie : "includes"
     person ||--o| person_detail : "has detailed version"
     movie }o--o| person : "has director"
     country |o--o{ person : "is home country for"
     movie }o--o| country : "was filmed in"
-    movie ||--o{ movie_actor : has
     movie ||--o{ movie_character : has
     person ||--o{ movie_actor : "is working as"
+    movie ||--o{ movie_actor : has
     movie_actor }o--o| character : plays
     movie_character }o--|| character : is
     character ||--o| character_detail : "has detailed version"
+    movie_detail |o--|| movie : "is detailed version of"
+    genre ||--o{ movie_genre : "is included in"
+    movie_genre }o--|| movie : includes
 ```
